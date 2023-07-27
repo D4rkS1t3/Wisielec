@@ -1,0 +1,7 @@
+Owoce,Banan,Ananas,Winogron,Gruszka,Truskawka,Malina,Arbuz
+Zwierzeta,Kot,Pies,Krowa,Konik,Ptak,Lew,Tygrys
+Kraje,Polska,Francja,Niemcy,Portugalia,Hiszpania,Szwecja,Rosja
+Kolory,Czerwony,Zielony,Niebieski,Czarny,Srebrny,Fioletowy,Szary
+Filmy,Incepcja,Matrix,Skazani na Shawshank,Pulp Fiction,Titanic,Ojciec chrzestny,Siedem,Gladiator
+Zawody,Lekarz,Nauczyciel,Programista,Sprzedawca,Kucharz,Projektant,Magazynier
+Samochody,Mercedes,Audi,BMW,Volkswagen,Ford,Toyota,Honda,Nissan
