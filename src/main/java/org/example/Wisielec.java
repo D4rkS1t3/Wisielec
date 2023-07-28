@@ -151,6 +151,9 @@ public class Wisielec extends JFrame implements ActionListener {
         if (komenda.equals("Reset") || komenda.equals("Restart")) {
             if (gracz != null) {
                 gracz.setPunkty(punkty);
+                if (gracz.getPunkty()>najwyzszePunkty) {
+                    najwyzszePunkty=gracz.getPunkty();
+                }
             }
             resetGry();
             zgadles = false;
@@ -204,9 +207,6 @@ public class Wisielec extends JFrame implements ActionListener {
 
                 if (niepoprawneOdp >= 6) {
                     gracz.setPunkty(punkty);
-                    if (zarzadzanieStatystyka.graczMiesciSieWRankingu(gracz.getPunkty())) {
-                        zarzadzanieStatystyka.aktualizujPlikStatystyki(gracz.getNazwa(),gracz.getPunkty());
-                    }
                     etykietaRezultatu.setText("Nie udało się, chcesz spróbować ponownie?");
                     rezultatKoncowy.setVisible(true);
 
@@ -252,17 +252,21 @@ public class Wisielec extends JFrame implements ActionListener {
 
     private void resetGry() {
         kategoria_haslo = bazaSlow.losowanie();
-        gracz.setPunkty(punkty);
-        if (niepoprawneOdp>=6 || !(zgadles)) {
-            punkty=0;
+
+        // Aktualizacja najwyższej liczby punktów gracza
+        if (gracz != null && punkty > najwyzszePunkty) {
+            najwyzszePunkty = punkty;
+        }
+
+        // Reset punktów i niepoprawnych odpowiedzi tylko w przypadku niepowodzenia
+        if (niepoprawneOdp >= 6 || !zgadles) {
+            punkty = 0;
             niepoprawneOdp = 0;
             Narzedzia.aktualizacja_obrazu(obrazWisielca, Stale.IMAGE_PATH);
         }
 
         etykietaPunktow.setText("Punkty: " + punkty);
-
         etykietaKategorii.setText(kategoria_haslo[0]);
-
         String ukryteSlowo = Narzedzia.ukryjSlowa(kategoria_haslo[1]);
         etykietaUkrytegoSlowa.setText(ukryteSlowo);
 
@@ -270,7 +274,6 @@ public class Wisielec extends JFrame implements ActionListener {
             przyciski[i].setEnabled(true);
             przyciski[i].setBackground(Stale.PRIMARY_COLOR);
         }
-
     }
     private void zwolnijZasoby() {
         obrazWisielca.setIcon(null); // Usuń ikonę z etykiety obrazu

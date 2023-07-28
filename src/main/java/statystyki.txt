@@ -1,4 +1,2 @@
-b,0
-ddsd,0
-ds,0
-c,0
+theNewBraveWorld,1
+voda,1
