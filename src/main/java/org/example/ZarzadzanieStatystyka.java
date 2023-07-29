@@ -1,12 +1,8 @@
 package org.example;
 
 import java.io.*;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 
-import static org.example.Stale.DATA_PATH;
 import static org.example.Stale.STATISTIC_PATH;
 
 public class ZarzadzanieStatystyka {

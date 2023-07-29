@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.*;
 
 import static org.example.Stale.DATA_PATH;
-import static org.example.Stale.STATISTIC_PATH;
 
 public class BazaSlow {
 

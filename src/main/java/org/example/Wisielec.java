@@ -3,12 +3,7 @@ package org.example;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
 
-import static org.example.Stale.FONT_PATH;
 
 public class Wisielec extends JFrame implements ActionListener {
     private String[] kategoria_haslo;
