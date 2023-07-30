@@ -1,6 +1,5 @@
 # Komentarz
-#Aby kod działał poprawnie należy zmienić w klasie Stale scieżke bezwzględna do pliku statystyki
-#public static final  String STATISTIC_PATH= "C:\\Programowanie\\nauka\\portfolio\\wisielec_polskie\\src\\main\\java\\statystyki.txt";
+#Aby zagrać w gre należy przejść do folderu \wisielec_polskie\out\artifacts\wisielec_jar i otworzyć plik wisielec.jar i już można grać :)
 
 ![1](https://github.com/D4rkS1t3/Wisielec/assets/140694059/c0252277-ca7a-4ec2-9aa4-1f764c1ad387)
 ![2](https://github.com/D4rkS1t3/Wisielec/assets/140694059/c8050c24-28e1-4dfc-a865-f4f80f3ea1e4)
