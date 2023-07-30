@@ -21,7 +21,7 @@ public class Menu extends JFrame implements ActionListener {
         setLayout(null);
         setResizable(false);
         getContentPane().setBackground(Stale.BACKGROUND_COLOR);
-        czcionka = Narzedzia.stworzCzcionke(Stale.FONT_PATH);
+        czcionka = new Font("Arial", Font.PLAIN, 12);
 
         etykietaMenu=new JLabel("WISIELEC");
         etykietaMenu.setFont(czcionka.deriveFont(100f));

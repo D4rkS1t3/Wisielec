@@ -11,7 +11,7 @@ public class Wisielec extends JFrame implements ActionListener {
     private int punkty;
     private final BazaSlow bazaSlow;
     private JButton[] przyciski;
-    private Font czcionka;
+    private Font czcionka,czcionka_przyciskow;
     private JLabel obrazWisielca, etykietaKategorii, etykietaUkrytegoSlowa, etykietaRezultatu, etykietaSlowa,etykietaPunktow;
 
     private JDialog rezultatKoncowy;
@@ -27,7 +27,7 @@ public class Wisielec extends JFrame implements ActionListener {
         super("Gra Wisielec (Java Ed.)");
         this.menadzerOkien=menadzerOkien;
         zarzadzanieStatystyka=menadzerOkien.getZarzadzanieStatystyka();
-        setSize(Stale.FRAME_SIZE);
+        setSize(new Dimension(Stale.FRAME_SIZE.width,Stale.FRAME_SIZE.height-6));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
@@ -38,7 +38,8 @@ public class Wisielec extends JFrame implements ActionListener {
         gracz=menadzerOkien.getGracz();
         przyciski=new JButton[35];
         kategoria_haslo=bazaSlow.losowanie();
-        czcionka=Narzedzia.stworzCzcionke(Stale.FONT_PATH);
+        czcionka=new Font("Courier New",Font.TRUETYPE_FONT,12);
+        czcionka_przyciskow=new Font("Verdana",Font.TRUETYPE_FONT,12);
         najwyzszePunkty = 0;
         utworzRezultatKoncowy();
         stworzInterfejs();
@@ -52,11 +53,11 @@ public class Wisielec extends JFrame implements ActionListener {
         punkty=0;
         zgadles=false;
         etykietaPunktow=new JLabel("Punkty: "+punkty);
-        etykietaPunktow.setFont(czcionka.deriveFont(22f));
+        etykietaPunktow.setFont(czcionka.deriveFont(18f));
         etykietaPunktow.setOpaque(true);
         etykietaPunktow.setForeground(Color.WHITE);
         etykietaPunktow.setBackground(Stale.BACKGROUND_COLOR);
-        etykietaPunktow.setBounds(0,0,etykietaPunktow.getPreferredSize().width, etykietaPunktow.getPreferredSize().height);
+        etykietaPunktow.setBounds(0,0,Stale.FRAME_SIZE.width, etykietaPunktow.getPreferredSize().height);
 
         obrazWisielca=Narzedzia.wczytajObraz(Stale.IMAGE_PATH);
         obrazWisielca.setBounds(0,0, obrazWisielca.getPreferredSize().width, obrazWisielca.getPreferredSize().height);
@@ -75,7 +76,6 @@ public class Wisielec extends JFrame implements ActionListener {
         //ukrywanie slowa
 
         etykietaUkrytegoSlowa=new JLabel(Narzedzia.ukryjSlowa(kategoria_haslo[1]));
-        czcionka=etykietaUkrytegoSlowa.getFont();
         etykietaUkrytegoSlowa.setFont(czcionka.deriveFont(56f));
         etykietaUkrytegoSlowa.setForeground(Color.WHITE);
         etykietaUkrytegoSlowa.setHorizontalAlignment(SwingConstants.CENTER);
@@ -99,7 +99,6 @@ public class Wisielec extends JFrame implements ActionListener {
         for (int i = 0; i < litery.length; i++) {
             JButton przycisk = new JButton(Character.toString(litery[i]));
             przycisk.setBackground(Stale.PRIMARY_COLOR);
-            Font czcionka_przyciskow=przycisk.getFont();
             przycisk.setFont(czcionka_przyciskow.deriveFont(22f));
             przycisk.setForeground(Color.WHITE);
             przycisk.addActionListener(this);
@@ -116,7 +115,6 @@ public class Wisielec extends JFrame implements ActionListener {
 
         // przycisk resetu
         JButton przyciskResetu = new JButton("Reset");
-        Font czcionka_przyciskow=przyciskResetu.getFont();
         przyciskResetu.setFont(czcionka_przyciskow.deriveFont(22f));
         przyciskResetu.setForeground(Color.WHITE);
         przyciskResetu.setBackground(Stale.SECONDARY_COLOR);

@@ -4,9 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +30,7 @@ public class Statystyki extends JFrame implements ActionListener {
     }
 
     public void stworzStatystyki() {
-        czcionka = Narzedzia.stworzCzcionke(Stale.FONT_PATH);
+        czcionka = new Font("Arial", Font.PLAIN, 12);
 
         JPanel panelGlowny = new JPanel();
         panelGlowny.setBackground(Stale.BACKGROUND_COLOR);
@@ -116,7 +114,8 @@ public class Statystyki extends JFrame implements ActionListener {
             }
             czytnik.close();
         } catch (IOException e) {
-            System.out.println("Błąd: " + e);
+            System.out.println("Błąd odczytu pliku statystyki.txt: " + e.getMessage());
         }
     }
+
 }

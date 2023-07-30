@@ -5,12 +5,11 @@ import java.io.File;
 
 public class Stale {
     public static final  String DATA_PATH="data.txt";
-    public static final String STATISTIC_PATH = Main.class.getClassLoader().getResource("statystyki.txt").getPath();
+    public static final String STATISTIC_PATH = "./statystyki.txt";
     //public static final String STATISTIC_PATH = "statystyki.txt";
 
     public static final Dimension FRAME_SIZE = new Dimension(540, 760);
     public static final Color BACKGROUND_COLOR = Color.decode("#101820");
-    public static final String FONT_PATH = "czcionka.ttf";
     public static final String IMAGE_PATH = "1.png";
 
     public static final Color SECONDARY_COLOR = Color.decode("#101dad");

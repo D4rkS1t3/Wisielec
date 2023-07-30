@@ -3,43 +3,40 @@ package org.example;
 import java.io.*;
 import java.util.*;
 
-import static org.example.Stale.STATISTIC_PATH;
-
 public class ZarzadzanieStatystyka {
     private LinkedList<String> nazwyGraczy;
     private LinkedList<Integer> punkty;
-
 
     public ZarzadzanieStatystyka() {
         try {
             nazwyGraczy = new LinkedList<>();
             punkty = new LinkedList<>();
 
-            String filePath = Stale.STATISTIC_PATH;
-            BufferedReader czytnik = new BufferedReader(new FileReader(filePath));
-            String linia;
-
-            while ((linia = czytnik.readLine()) != null) {
-                String[] linia_wyrazow = linia.split(",");
-                if (linia_wyrazow.length == 2) { // Sprawdzamy, czy linia zawiera dwie wartości oddzielone przecinkiem
-                    String nazwaGracza = linia_wyrazow[0].trim(); // Pobieramy nazwę gracza, usuwając ewentualne białe znaki na początku i końcu
-                    int punkt = Integer.parseInt(linia_wyrazow[1].trim()); // Pobieramy punkt jako liczbę całkowitą
-                    nazwyGraczy.add(nazwaGracza);
-                    punkty.add(punkt);
-                } else {
-                    System.out.println("Niepoprawny format linii w pliku statystyki.txt: " + linia);
+            InputStream inputStream = Main.class.getClassLoader().getResourceAsStream("statystyki.txt");
+            if (inputStream != null) {
+                try (BufferedReader czytnik = new BufferedReader(new InputStreamReader(inputStream))) {
+                    String linia;
+                    while ((linia = czytnik.readLine()) != null) {
+                        String[] linia_wyrazow = linia.split(",");
+                        if (linia_wyrazow.length == 2) {
+                            String nazwaGracza = linia_wyrazow[0].trim();
+                            int punkt = Integer.parseInt(linia_wyrazow[1].trim());
+                            nazwyGraczy.add(nazwaGracza);
+                            punkty.add(punkt);
+                        } else {
+                            System.out.println("Niepoprawny format linii w pliku statystyki.txt: " + linia);
+                        }
+                    }
                 }
+            } else {
+                System.out.println("Nie można wczytać pliku statystyki.txt");
             }
-            czytnik.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Błąd: " + e.getMessage());
         } catch (IOException e) {
             System.out.println("Błąd odczytu pliku statystyki.txt: " + e.getMessage());
         } catch (NumberFormatException e) {
             System.out.println("Błąd przetwarzania liczby w pliku statystyki.txt: " + e.getMessage());
         }
     }
-
 
     public boolean graczMiesciSieWRankingu(int punktyGracza) {
         if (nazwyGraczy.size()<20) {
@@ -53,9 +50,7 @@ public class ZarzadzanieStatystyka {
         return false;
     }
 
-
-
-        public int miejsceGracza(int punktyGracza) {
+    public int miejsceGracza(int punktyGracza) {
         int k=0;
         if (nazwyGraczy.size()<1) {
             return k;
@@ -90,7 +85,7 @@ public class ZarzadzanieStatystyka {
         }
 
         // Zapis do pliku
-        String filePath = STATISTIC_PATH;
+        String filePath = Stale.STATISTIC_PATH;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             for (int i = 0; i < nazwyGraczy.size(); i++) {
                 String nazwa = nazwyGraczy.get(i);
@@ -101,47 +96,26 @@ public class ZarzadzanieStatystyka {
         } catch (IOException e) {
             System.out.println("Błąd przy zapisie do pliku statystyki.txt: " + e);
         }
-
     }
 
-
-    private void usunNajnizszaLiczbePunktow(RandomAccessFile raf) throws IOException {
-        int liczbaGraczy = 0;
+    private void usunNajnizszaLiczbePunktow() {
+        int liczbaGraczy = nazwyGraczy.size();
         int indeksNajnizszejLiczby = -1;
         int najnizszaLiczbaPunktow = Integer.MAX_VALUE;
 
         // Szukamy linii z najniższą liczbą punktów
-        raf.seek(0);
-        String line;
-        while ((line = raf.readLine()) != null) {
-            String[] linia_wyrazow = line.split(",");
-            int punkty = Integer.parseInt(linia_wyrazow[1].trim());
+        for (int i = 0; i < liczbaGraczy; i++) {
+            int punkty = this.punkty.get(i);
             if (punkty < najnizszaLiczbaPunktow) {
                 najnizszaLiczbaPunktow = punkty;
-                indeksNajnizszejLiczby = liczbaGraczy;
+                indeksNajnizszejLiczby = i;
             }
-            liczbaGraczy++;
         }
 
         // Jeśli liczba graczy przekracza 20, usuwamy gracza z najniższą liczbą punktów
         if (liczbaGraczy >= 20 && indeksNajnizszejLiczby != -1) {
-            List<String> lines = new ArrayList<>();
-            raf.seek(0);
-            int indeks = 0;
-            while ((line = raf.readLine()) != null) {
-                if (indeks != indeksNajnizszejLiczby) {
-                    lines.add(line);
-                }
-                indeks++;
-            }
-
-            // Zapisujemy nową zawartość pliku bez gracza z najniższą liczbą punktów
-            raf.setLength(0); // Czyścimy plik
-            for (String newLine : lines) {
-                raf.writeBytes(newLine + System.lineSeparator());
-            }
+            nazwyGraczy.remove(indeksNajnizszejLiczby);
+            punkty.remove(indeksNajnizszejLiczby);
         }
     }
-
-
 }
